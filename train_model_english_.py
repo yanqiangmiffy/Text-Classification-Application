@@ -4,7 +4,7 @@ from keras.callbacks import ModelCheckpoint
 from keras.optimizers import Adam
 from keras.models import Model
 from sklearn.model_selection import train_test_split
-from data_helpers import load_data
+from data_helpers_english import load_data
 
 print("正在加载数据....")
 x,y,vocabulary,vocabulary_inv=load_data()
@@ -56,7 +56,7 @@ output = Dense(units=2, activation='softmax')(dropout)
 model=Model(inputs=inputs,outputs=output)
 
 
-checkpoint = ModelCheckpoint('models/weights.{epoch:03d}-{val_acc:.4f}.hdf5', monitor='val_acc', verbose=1, save_best_only=True, mode='auto')
+checkpoint = ModelCheckpoint('results/english.weights.{epoch:03d}-{val_acc:.4f}.hdf5', monitor='val_acc', verbose=1, save_best_only=True, mode='auto')
 adam = Adam(lr=1e-4, beta_1=0.9, beta_2=0.999, epsilon=1e-08, decay=0.0)
 
 model.compile(optimizer=adam, loss='binary_crossentropy', metrics=['accuracy'])
