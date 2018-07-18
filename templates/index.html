@@ -14,6 +14,9 @@
             margin-top:100px;
         }
     </style>
+    <script type="text/javascript">
+        window.history.replaceState(null,null,window.location.href);
+    </script>
 </head>
 <body class="bg-light">
     <div class="container">
@@ -34,17 +37,18 @@
         <p class="text-muted lead text-center">
             (The training corpus comes from the film review, so if the input sentence is similar to the scene, the prediction result may be better.)
         </p>
-
-        {% if result.positive>result.negative %}
-        <p class="text-info text-center" style="font-size: 30px">The submitted sentence is:"{{result.sentence}}"</p>
-        <p class="text-secondary text-center" style="font-size: 30px">
-            The sentence is <span class="text-danger">positive</span>,the probability is <span class="text-primary">{{result.positive}}</span>
-        </p>
-        {% else %}
-        <p class="text-info text-center" style="font-size: 30px">The submitted sentence is:"{{result.sentence}}"</p>
-        <p class="text-secondary text-center" style="font-size: 30px">
-            The sentence is <span class="text-danger">negative</span>,the probability is <span class="text-primary">{{result.negative}}</span>
-        </p>
+        {% if result %}
+            {% if result.positive>result.negative %}
+            <p class="text-info text-center" style="font-size: 30px">The submitted sentence is:"{{result.sentence}}"</p>
+            <p class="text-secondary text-center" style="font-size: 30px">
+                The sentence is <span class="text-danger">positive</span>,the probability is <span class="text-primary">{{result.positive}}</span>
+            </p>
+            {% else %}
+            <p class="text-info text-center" style="font-size: 30px">The submitted sentence is:"{{result.sentence}}"</p>
+            <p class="text-secondary text-center" style="font-size: 30px">
+                The sentence is <span class="text-danger">negative</span>,the probability is <span class="text-primary">{{result.negative}}</span>
+            </p>
+            {% endif %}
         {% endif %}
     </div>
 

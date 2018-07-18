@@ -24,12 +24,8 @@ def en_predict(input_x):
 def english():
     if request.method=='POST':
         review=request.form['review']
-        if review!='':
-            result=en_predict(review)
-            return render_template('index.html',result=result)
-        else:
-            message="分析失败"
-            return render_template('index.html',message=message)
+        result=en_predict(review)
+        return render_template('index.html',result=result)
     return render_template('index.html')
 
 
