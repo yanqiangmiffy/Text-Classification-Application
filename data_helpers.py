@@ -33,9 +33,9 @@ def load_data_and_labels():
     :return:
     """
     # 从文件加载数据
-    positive_examples=list(open('data/rt-polarity.pos','r',encoding='latin-1').readlines())
+    positive_examples=list(open('data/english/rt-polarity.pos','r',encoding='latin-1').readlines())
     positive_examples=[s.strip() for s in positive_examples] # 去除句子前后的空格
-    negative_examples=list(open('data/rt-polarity.neg','r',encoding='latin-1').readlines())
+    negative_examples=list(open('data/english/rt-polarity.neg','r',encoding='latin-1').readlines())
     negative_examples=[s.strip() for s in negative_examples] # 去除句子前后的空格
 
     # 分割词
@@ -116,4 +116,5 @@ def load_data():
 
 
 if __name__ == '__main__':
-    build_predict_input()
+    x=build_predict_input('i love you')
+    print(x)
