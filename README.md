@@ -5,7 +5,7 @@
 ## 运行
 英文：
 ![](https://github.com/yanqiangmiffy/Text-Classification-Application/blob/master/assets/result_en.png)
-中文
+中文：
 ![](https://github.com/yanqiangmiffy/Text-Classification-Application/blob/master/assets/result_ch.png)
 ## 资料
 - [CNN-text-classification-keras](https://github.com/bhaveshoswal/CNN-text-classification-keras)
