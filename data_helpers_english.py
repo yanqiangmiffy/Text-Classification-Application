@@ -89,7 +89,7 @@ def build_input(sentences,labels,vocabulary):
     return [x,y]
 
 
-def build_predict_input(input_x):
+def build_input_english(input_x):
     sentences, labels = load_data_and_labels()
     sentences_padded = pad_sentences(sentences)
     vocabulary, vocabulary_inv = build_vocab(sentences_padded)
