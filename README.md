@@ -7,6 +7,7 @@
 英文：
 ![](https://github.com/yanqiangmiffy/Text-Classification-Application/blob/master/assets/result_en.png)
 准训练结果：验证集76%左右
+
 中文：
 ![](https://github.com/yanqiangmiffy/Text-Classification-Application/blob/master/assets/result_ch.png)
 准训练结果：验证集91%左右
