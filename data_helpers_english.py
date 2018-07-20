@@ -2,8 +2,8 @@ import numpy as np
 import re
 import itertools
 from collections import Counter
-
-
+import pickle
+import os
 def clean_str(string):
     """
     数据预处理
@@ -67,19 +67,35 @@ def pad_sentences(sentences,padding_word="<PAD/>"):
     return padded_sentences
 
 
-def build_vocab(sentences):
+def build_vocab():
     """
     index和word创建
     :param sentences:
     :return:
     """
+    # 加载已经保存的词汇文件
+    sentences, labels = load_data_and_labels()
+    sentences_padded = pad_sentences(sentences)
+
+    voab_dir = 'data/english/vocab.pkl'
+    if os.path.exists(voab_dir):
+        with open(voab_dir, 'rb') as in_data:
+            vocabulary = pickle.load(in_data)
+            vocabulary_inv = pickle.load(in_data)
+        return [vocabulary, vocabulary_inv]
+
     # 创建词汇表
-    word_counts=Counter(itertools.chain(*sentences))
+    word_counts=Counter(itertools.chain(*sentences_padded))
     # 将index映射到word
     vocabulary_inv=[x[0] for x in word_counts.most_common()]
     vocabulary_inv=list(sorted(vocabulary_inv))
     # 将word映射到index
     vocabulary={x:i for i,x  in enumerate(vocabulary_inv)}
+
+    with open(voab_dir,'wb') as out_data:
+        print("正在保存英文文词汇表")
+        pickle.dump(vocabulary,out_data,pickle.HIGHEST_PROTOCOL)
+        pickle.dump(vocabulary_inv,out_data,pickle.HIGHEST_PROTOCOL)
     return [vocabulary,vocabulary_inv]
 
 
@@ -90,9 +106,7 @@ def build_input(sentences,labels,vocabulary):
 
 
 def build_input_english(input_x):
-    sentences, labels = load_data_and_labels()
-    sentences_padded = pad_sentences(sentences)
-    vocabulary, vocabulary_inv = build_vocab(sentences_padded)
+    vocabulary, vocabulary_inv = build_vocab()
 
     sequence_length=56
     padding_word = "<PAD/>"
@@ -110,11 +124,11 @@ def load_data():
     """
     sentences,labels=load_data_and_labels()
     sentences_padded=pad_sentences(sentences)
-    vocabulary,vocabulary_inv=build_vocab(sentences_padded)
+    vocabulary,vocabulary_inv=build_vocab()
     x,y=build_input(sentences_padded,labels,vocabulary)
     return [x,y,vocabulary,vocabulary_inv]
 
-
-if __name__ == '__main__':
-    x=build_predict_input('i love you')
-    print(x)
+#
+# if __name__ == '__main__':
+#     x=build_input_english('i love you')
+#     print(x)

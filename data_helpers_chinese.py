@@ -1,3 +1,5 @@
+import pickle
+import os
 import numpy as np
 import itertools
 from collections import Counter
@@ -35,6 +37,8 @@ def pad_sentences(sentences,padding_word="<PAD/>",sequence_length=50):
     # length=pd.DataFrame([len(x) for x in sentences])
     # print(length.describe())
     # print(sequence_length)
+
+
     padded_sentences=[]
     for i in range(len(sentences)):
         sentence=sentences[i]
@@ -47,19 +51,37 @@ def pad_sentences(sentences,padding_word="<PAD/>",sequence_length=50):
     return padded_sentences
 
 
-def build_vocab(sentences):
+def build_vocab():
     """
     index和word创建
     :param sentences:
     :return:
     """
+
+    sentences, labels = load_data_and_labels()
+    sentences_padded = pad_sentences(sentences)
+
+
+    voab_dir='data/chinese/vocab.pkl'
+    if os.path.exists(voab_dir):
+        with open(voab_dir,'rb') as in_data:
+            vocabulary=pickle.load(in_data)
+            vocabulary_inv=pickle.load(in_data)
+        return [vocabulary,vocabulary_inv]
+
     # 创建词汇表
-    word_counts=Counter(itertools.chain(*sentences))
+    word_counts=Counter(itertools.chain(*sentences_padded))
     # 将index映射到word
     vocabulary_inv=[x[0] for x in word_counts.most_common()]
     vocabulary_inv=list(sorted(vocabulary_inv))
     # 将word映射到index
     vocabulary={x:i for i,x  in enumerate(vocabulary_inv)}
+
+
+    with open(voab_dir,'wb') as out_data:
+        print("正在保存中文词汇表")
+        pickle.dump(vocabulary,out_data,pickle.HIGHEST_PROTOCOL)
+        pickle.dump(vocabulary_inv,out_data,pickle.HIGHEST_PROTOCOL)
     return [vocabulary,vocabulary_inv]
 
 
@@ -70,16 +92,20 @@ def build_input(sentences,labels,vocabulary):
 
 
 def build_input_chinese(input_x):
-    sentences, labels = load_data_and_labels()
-    sentences_padded = pad_sentences(sentences)
-    vocabulary, vocabulary_inv = build_vocab(sentences_padded)
+
+
+    vocabulary, vocabulary_inv = build_vocab()
 
     sequence_length=50
     padding_word = "<PAD/>"
     input_x=' '.join(jieba.cut(input_x))
     input_x = input_x.split(' ')
-    num_padding = sequence_length - len(input_x)
-    input_x = input_x + num_padding * [padding_word]
+    if sequence_length>len(input_x):
+        num_padding = sequence_length - len(input_x)
+        input_x = input_x + num_padding * [padding_word]
+    else:
+        input_x=input_x[:50]
+
     input_x = np.array([vocabulary[word] if word in vocabulary else vocabulary[padding_word] for word in input_x])
     return input_x.reshape(1,sequence_length)
 
@@ -91,7 +117,7 @@ def load_data():
     """
     sentences,labels=load_data_and_labels()
     sentences_padded=pad_sentences(sentences)
-    vocabulary,vocabulary_inv=build_vocab(sentences_padded)
+    vocabulary,vocabulary_inv=build_vocab()
     x,y=build_input(sentences_padded,labels,vocabulary)
     return [x,y,vocabulary,vocabulary_inv]
 
