@@ -123,6 +123,7 @@ def load_data():
 
 
 # if __name__ == '__main__':
-    # x=build_predict_input('服务 招待所 水平 网络 不好 值得 推荐')
-    # x, y, vocabulary, vocabulary_inv=load_data()
-    # print(x.shape)
+#     # x=build_input_chinese('服务 招待所 水平 网络 不好 值得 推荐')
+#     x, y, vocabulary, vocabulary_inv=load_data()
+#     print(x.shape)
+#     print(len(vocabulary))

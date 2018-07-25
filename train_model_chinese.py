@@ -9,18 +9,18 @@ from data_helpers_chinese import load_data
 print("正在加载数据....")
 x,y,vocabulary,vocabulary_inv=load_data()
 
-# x.shape -> (10662, 56)
-# y.shape -> (10662, 2)
-# len(vocabulary) -> 12766
-# len(vocabulary_inv) -> 12766
+# x.shape -> (54568, 50)
+# y.shape -> (54568, 2)
+# len(vocabulary) -> 52822
+# len(vocabulary_inv) -> 52822
 
 # 划分数据集
 X_train,X_test,y_train,y_test=train_test_split(x,y,test_size=0.2,random_state=42)
-
-# X_train.shape -> (8529, 56)
-# y_train.shape -> (8529, 2)
-# X_test.shape -> (2133, 56)
-# y_test.shape -> (2133, 2)
+print(X_train.shape,X_test.shape,y_train.shape,y_test.shape)
+# X_train.shape -> (43654, 50)
+# y_train.shape -> (43654, 2)
+# X_test.shape -> (10914, 50)
+# y_test.shape -> (10914, 2)
 
 
 sequence_length=X_train.shape[1]
