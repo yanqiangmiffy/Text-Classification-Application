@@ -38,6 +38,7 @@ X_test.shape -> (2133, 56)
 y_test.shape -> (2133, 2)
 ```
 ## 资料
+- [文本分类(下)-卷积神经网络(CNN)在文本分类上的应用](https://www.jianshu.com/p/e9108a0f5ac8)
 - [CNN-text-classification-keras](https://github.com/bhaveshoswal/CNN-text-classification-keras)
 - [Implementing a CNN for Text Classification in TensorFlow](http://www.wildml.com/2015/12/implementing-a-cnn-for-text-classification-in-tensorflow/)
 - [Understanding Convolutional Neural Networks for NLP](http://www.wildml.com/2015/11/understanding-convolutional-neural-networks-for-nlp/)
